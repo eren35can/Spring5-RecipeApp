@@ -6,15 +6,14 @@ import javax.persistence.*;
 public class Notes {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "notes")
+    @OneToOne
     private Recipe recipe;
 
     @Lob
     private String recipeNotes;
-
 
     public Long getId() {
         return id;
