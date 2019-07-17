@@ -1,43 +1,27 @@
-package guru.springframework.spring5recipeapp.models;
+package guru.springframework.spring5recipeapp.commands;
 
-import javax.persistence.*;
+import guru.springframework.spring5recipeapp.models.Difficulty;
+
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-public class Recipe {
+public class RecipeCommand {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String description;
     private Integer prepTime;
     private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;
-
-    @Lob
     private String directions;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients = new HashSet<>();
-
-    @Lob
-    private Byte[] image;
-
-    @Enumerated(value = EnumType.STRING)
+    private Set<IngredientCommand> ingredients = new HashSet<>();
     private Difficulty difficulty;
+    private NotesCommand notes;
+    private Set<CategoryCommand> categories = new HashSet<>();
+    public RecipeCommand(){
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Notes notes;
-
-    @ManyToMany
-    @JoinTable(name = "recipe_category",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories = new HashSet<>();
+    }
 
     public Long getId() {
         return id;
@@ -103,35 +87,11 @@ public class Recipe {
         this.directions = directions;
     }
 
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
-
-    public Notes getNotes() { return notes; }
-
-    public void setNotes(Notes notes) {
-        if (notes != null) {
-            this.notes = notes;
-            notes.setRecipe(this);
-        }
-    }
-
-    //helper method
-    public Recipe addIngredient(Ingredient ingredient){
-        ingredient.setRecipe(this);
-        this.ingredients.add(ingredient);
-        return this;
-    }
-
-    public Set<Ingredient> getIngredients() {
+    public Set<IngredientCommand> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
+    public void setIngredients(Set<IngredientCommand> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -143,11 +103,19 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
-    public Set<Category> getCategories() {
+    public NotesCommand getNotes() {
+        return notes;
+    }
+
+    public void setNotes(NotesCommand notes) {
+        this.notes = notes;
+    }
+
+    public Set<CategoryCommand> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<CategoryCommand> categories) {
         this.categories = categories;
     }
 }
