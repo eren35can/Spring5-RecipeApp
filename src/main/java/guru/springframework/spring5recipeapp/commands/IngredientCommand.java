@@ -9,8 +9,20 @@ public class IngredientCommand {
     private BigDecimal amount;
     private UnitOfMeasureCommand uom;
 
+    private Long recipeId;
+
+
     public IngredientCommand(){
 
+    }
+
+
+    public Long getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(Long recipeId) {
+        this.recipeId = recipeId;
     }
 
     public Long getId() {
